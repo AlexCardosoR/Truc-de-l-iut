@@ -1,0 +1,25 @@
+all : editeur warcraft
+editeur : editeur.o video.o perso.o
+	gcc -o editeur editeur.o video.o perso.o
+editeur.o : editeur.c editeur.h video.h perso.h
+	gcc -Wall -c -o editeur.o editeur.c
+clean :
+	rm -f *.o editeur warcraft
+# DO NOT DELETE
+
+editeur.o: /usr/include/stdio.h /usr/include/features.h
+editeur.o: /usr/include/stdc-predef.h /usr/include/libio.h
+editeur.o: /usr/include/_G_config.h /usr/include/wchar.h
+editeur.o: /usr/include/unistd.h /usr/include/getopt.h perso.h video.h
+editeur.o: editeur.h
+perso.o: /usr/include/stdio.h /usr/include/features.h
+perso.o: /usr/include/stdc-predef.h /usr/include/libio.h
+perso.o: /usr/include/_G_config.h /usr/include/wchar.h perso.h video.h
+video.o: /usr/include/stdio.h /usr/include/features.h
+video.o: /usr/include/stdc-predef.h /usr/include/libio.h
+video.o: /usr/include/_G_config.h /usr/include/wchar.h video.h
+warcraft.o: /usr/include/stdio.h /usr/include/features.h
+warcraft.o: /usr/include/stdc-predef.h /usr/include/libio.h
+warcraft.o: /usr/include/_G_config.h /usr/include/wchar.h
+warcraft.o: /usr/include/unistd.h /usr/include/getopt.h video.h perso.h
+warcraft.o: warcraft.h

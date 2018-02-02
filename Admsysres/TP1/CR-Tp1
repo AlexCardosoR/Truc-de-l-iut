@@ -1,0 +1,140 @@
+Compilation manuelle:
+
+1/
+	gcc -Wall -c -o editeur.o editeur.c
+	gcc -Wall -c -o perso.o perso.c
+	gcc -Wall -c -o video.o video.c
+	gcc -o editeur editeur.o video.o perso.o
+
+
+2/
+	 gcc -Wall -c -o warcraft.o warcraft.c
+
+	ERREUR:
+
+	gcc -Wall -c -o warcraft.o warcraft.c
+	In file included from perso.h:4:0,
+		         from warcraft.c:5:
+	video.h:4:3: error: conflicting types for ‘Video’
+	 } Video;
+	   ^
+	In file included from warcraft.c:4:0:
+	video.h:4:3: note: previous declaration of ‘Video’ was here
+	 } Video;
+	   ^
+
+	Il a deux #ifndef de Video. Il faudrait écrire un #ifndef dans video.h.
+
+
+Premier Makefile :
+
+	all : editeur warcraft
+	editeur : editeur.o video.o perso.o
+		gcc -o editeur editeur.o video.o perso.o
+	editeur.o : editeur.c editeur.h video.h perso.h
+		gcc -Wall -c -o editeur.o editeur.c
+	perso.o : perso.c perso.h video.h
+		gcc -Wall -c -o perso.o perso.c
+	video.o : video.c video.h
+		gcc -Wall -c -o video.o video.c
+	warcraft : warcraft.o video.o perso.o
+		gcc -o warcraft warcraft.o video.o perso.o
+	warcraft.o : warcraft.c warcraft.h video.h perso.h
+        	gcc -Wall -c -o warcraft.o warcraft.c 
+	clean:
+		rm -f *.o editeur warcraft
+
+Second Makefile :
+
+	CC=gcc
+	CFLAGS=-Wall -c -o
+	LDFLAGS=
+	all : editeur warcraft
+	editeur : editeur.o video.o perso.o
+		$(CC) -o editeur editeur.o video.o perso.o
+	editeur.o : editeur.c editeur.h video.h perso.h
+		$(CC) $(CFLAGS) editeur.o editeur.c
+	perso.o : perso.c perso.h video.h
+		$(CC) $(CFLAGS) perso.o perso.c
+	video.o : video.c video.h
+		$(CC) $(CFLAGS) video.o video.c
+	warcraft : warcraft.o video.o perso.o
+		$(CC) -o warcraft warcraft.o video.o perso.o
+	warcraft.o : warcraft.c warcraft.h video.h perso.h
+		$(CC) $(CFLAGS) warcraft.o warcraft.c 
+	clean:
+		rm -f *.o editeur warcraft
+
+Troisième Makefile : 
+
+	CC=gcc
+	CFLAGS=-Wall -c -o
+	LDFLAGS=
+	all : editeur warcraft
+	editeur : editeur.o video.o perso.o
+		$(CC) -o $@ $^
+	editeur.o : editeur.c editeur.h video.h perso.h
+		$(CC) $(CFLAGS) $@ $<
+	perso.o : perso.c perso.h video.h
+		$(CC) $(CFLAGS) $@ $<
+	video.o : video.c video.h
+		$(CC) $(CFLAGS) $@ $<
+	warcraft : warcraft.o video.o perso.o
+		$(CC) -o $@ $^
+	warcraft.o : warcraft.c warcraft.h video.h perso.h
+		$(CC) $(CFLAGS) $@ $< 
+	clean:
+		rm -f *.o editeur warcraft
+
+Quatrième Makefile : 
+	
+	CC=gcc
+	CFLAGS=-Wall -c -o
+	LDFLAGS=
+	all : editeur warcraft
+
+	% : %.o
+		$(CC) -o $@ $^ 
+	%.o : %.c %.h
+		$(CC) $(CFLAGS) $@ $<
+
+
+	editeur : editeur.o video.o perso.o
+	editeur.o : editeur.c editeur.h video.h perso.h
+	perso.o : perso.c perso.h video.h
+	video.o : video.c video.h
+	warcraft : warcraft.o video.o perso.o
+	warcraft.o : warcraft.c warcraft.h video.h perso.h
+
+	clean:
+		rm -f *.o editeur warcraft
+
+Cinquième Makefile :
+
+	CC=gcc
+	CFLAGS=-Wall -c -o
+	LDFLAGS=
+	all : editeur warcraft
+
+	% : %.o
+		$(CC) -o $@ $^ 
+	%.o : %.c %.h
+		$(CC) $(CFLAGS) $@ $<
+
+
+	editeur : editeur.o video.o perso.o
+	warcraft : warcraft.o video.o perso.o
+		makedepend -Y *.c
+
+	depends : 
+		makedepend -Y *.c
+
+	clean :
+		rm -f *.o editeur warcraft
+                                 
+
+
+
+
+
+

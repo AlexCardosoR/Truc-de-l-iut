@@ -1,0 +1,5 @@
+1/
+	gcc -Wall -I /tmp/graphic/usr/include -c -o test.o test.c
+
+2/
+	gcc -L /tmp/graphic/usr/lib test.o -o test -lgraphic  -lX11

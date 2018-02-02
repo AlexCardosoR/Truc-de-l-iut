@@ -1,0 +1,18 @@
+CC=gcc
+CFLAGS=-Wall -c
+LDFLAGS=
+all : editeur warcraft
+editeur : editeur.o video.o perso.o
+	$(CC) -o editeur editeur.o video.o perso.o
+editeur.o : editeur.c editeur.h video.h perso.h
+	$(CC) $(CFLAGS) -o editeur.o editeur.c
+perso.o : perso.c perso.h video.h
+	$(CC) $(CFLAGS) -o perso.o perso.c
+video.o : video.c video.h 
+	$(CC) $(CFLAGS) -o video.o video.c
+warcraft : warcraft.o video.o perso.o
+	$(CC) -o warcraft warcraft.o video.o perso.o
+warcraft.o : warcraft.c warcraft.h video.h perso.h
+	$(CC) $(CFLAGS) -o warcraft.o warcraft.c 
+clean:
+	rm -f *.o editeur warcraft

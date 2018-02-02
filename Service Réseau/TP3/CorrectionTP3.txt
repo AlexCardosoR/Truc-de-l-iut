@@ -1,0 +1,49 @@
+#!/bin/sh
+base=www/
+
+answer_ok(){
+        echo "HTTP/1.1 200 OK\r"
+        echo "Content-Type: $2\r"
+        echo "\r"
+        if [ "$1" = "/" ]; then
+                cat $base/index.html
+        else
+                cat $base$1
+        fi
+        echo "\r"
+}
+
+answer_error(){
+        case $1 in
+                404) echo "HTTP/1.1 404 Not Found"
+                     echo "Content-Type: text/html"
+                     echo "\r"
+                     echo "<p>Erreur 404 - Page introuvable</p>";;
+        esac
+}
+
+if [ "$1" = "--request" ]; then
+        while read line; do
+
+                cmd=$(echo $line | cut -d ' ' -f 1)
+
+                case $cmd in
+                        GET) filename=$(echo $line | cut -d ' ' -f 2);;
+                        #*) echo CMD est autre chose;;
+                esac
+
+                if echo "$line" | grep -q '^[[:space:]]*$'; then
+                        break
+                fi
+        done
+
+        if [ -e $base$filename ]; then
+                filetype=$(file --brief --mime-type '$base$filename')
+                answer_ok $filename $filetype
+        else
+                answer_error 404
+        fi
+else
+        socat TCP-LISTEN:8080,reuseaddr,fork SYSTEM:"sh $0 --request"
+fi
+~  
