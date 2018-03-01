@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TP2 de programmation objet interprétée - les joyeux de la couronne</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="TPs mis à disposition le plus simplement possible pour mes étudiants.">
+    <link rel="canonical" href="http://hina/~delobel/ruby-2a/2018/01/28/tp_2/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/~delobel/css/main.css">
+
+</head>
+
+
+  <body class="ruby-2a">
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>TP2 de programmation objet interprétée - les joyeux de la couronne</h1>
+    <p class="meta">Jan 28, 2018</p>
+  </header>
+
+  <article class="post-content">
+  <h1 id="les-joyeux-de-la-couronne">Les joyeux de la couronne</h1>
+
+<p>Ce TP a pour but de vous faire pratiquer les bases du langage Ruby, en particulier :</p>
+
+<ul>
+  <li>Classes, héritage, construction, attributs, méthodes</li>
+  <li>Continuer à utiliser Hash et Map</li>
+</ul>
+
+<h2 id="loutil-du-jour">L’outil du jour</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">rubocop</code> est un vérificateur de syntaxe et de style Ruby. Usage classique: <code class="highlighter-rouge">rubocop programme.rb</code>. D’autres option,s sont aussi très utiles, à vous de chercher.</li>
+</ul>
+
+<h2 id="préliminaires">Préliminaires</h2>
+
+<h3 id="creature">Creature</h3>
+
+<p>Créez une classe <code class="highlighter-rouge">Creature</code> dotée:</p>
+
+<ul>
+  <li>d’un nom</li>
+  <li>d’un nombre de points de vie</li>
+  <li>d’une méthode <code class="highlighter-rouge">encaisser(degats)</code> qui enlève des pv</li>
+  <li>d’une méthode <code class="highlighter-rouge">to_s</code> pour la conversion en texte</li>
+  <li>d’une méthode <code class="highlighter-rouge">soigner(pv)</code> qui ajoute pv au nombre de points de vie de la créature.</li>
+</ul>
+
+<p>Testez!</p>
+
+<h3 id="troll">Troll</h3>
+
+<p>Créez une classe <code class="highlighter-rouge">Troll</code> qui hérite de <code class="highlighter-rouge">Creature</code>.</p>
+
+<h3 id="gobelin">Gobelin</h3>
+
+<p>Créez une classe Gobelin qui hérite de Creature. La méthode <code class="highlighter-rouge">encaisser</code> de Gobelin enlève a ses points de vie la moitié des dégats (le gobelin est vif, agile, et difficile à viser car de petite taille).</p>
+
+<h3 id="la-compagnie">La compagnie</h3>
+
+<p>Un groupe de gobelins et de trolls (les <em>joyeux de la couronne</em>) visite le donjon de Rhaalduck, célèbre soit disant pour ses nombreux trésors riches en pierre précieuses. Les couloirs de ce sinistre batiment ne permettent qu’un passage en file indienne.</p>
+
+<ul>
+  <li>Créez une classe <code class="highlighter-rouge">Compagnie</code> pour stocker un groupe d’aventuriers.</li>
+  <li>Dotez la des méthodes permettants d’ajouter des créatures. Interdisez les homonimies en lançant une exception.</li>
+  <li>Ajoutez à ce groupe les Creatures suivantes:
+    <ul>
+      <li>Gruk est un troll. Il a 27pv</li>
+      <li>Grok est le petit frère de Gruk. Il n’a que 24pv</li>
+      <li>Zak est un gobelin. Il a 12pv</li>
+      <li>Zog n’est pas le frère de Zak mais c’est un gobelin quand même. Il a 13pv</li>
+    </ul>
+  </li>
+  <li>Affichez la compagnie</li>
+</ul>
+
+<h2 id="lexploration">L’exploration</h2>
+
+<p>Pour la suite des questions, dotez votre compagnie d’une méthode <code class="highlighter-rouge">exploration</code> qui simule les actions suivante (elle sera enrichie question après question). Votre code doit être court et joli.</p>
+
+<ol>
+  <li>
+    <p>Le premier personnage pose le pied sur une dalle de couleur différente des autres et encaisse 10 dégats.</p>
+  </li>
+  <li>Comment gérer les morts? Modifiez vos classes pour que la mort d’une créature prévienne automatiquement le groupe auquelle elle appartient (pour qu’il la supprime). Quel patron implémentez vous?</li>
+  <li>Le groupe décide alors de faire passer Zak en tête afin de servir d’éclaireur.</li>
+  <li>Gruk, blessé, laisse la place à son frère.</li>
+  <li>Une trappe s’ouvre sous les pieds du deuxième personnage (le gobelin de tête étant trop léger pour activer le piège). Celui-ci encaisse 14 dégats.</li>
+  <li>Le groupe trouve une potion de soins et la fait boire à celui qui a le moins de points de vie (+5pv).</li>
+  <li>Au détour d’un couloir mal éclairé, la première créature marche sur une rune étrange sournoisement dissimulée sous un tapis. le groupe entier encaisse 10 dégats mais s’embrase de façon très esthétique.</li>
+  <li>Alerté par le bruit de l’explosion, le grand et vil Zangdar s’approche et leur lance une malédiction de Kozysar (petit démon du troisième cercle). Ce sort a un effet compliqué: envoyé contre un groupe, il infliger 15% du total des PV du groupe à <strong>chacun</strong> des membres du groupe.</li>
+  <li>Le groupe compte-il des survivants? En tous cas, il s’organise alors par ordre décroissant de PV, et charge!</li>
+  <li>Le groupe arrive enfin a portée de massue de Zangdar. Celui ci lance successivement cinq rayons lunaires qui viennent tour à tour frapper le premier du groupe, lui infligeant 5 points de dégats par rayon. Si celui-ci meurt, il est supprimé et remplacé naturellement par lesuivant. Zangdar fait un échec critique après le cinquième sort lancé et se bannit tout seul dans les limbes.</li>
+  <li>Combien reste-il de survivants?</li>
+  <li>Combien de créatures ont plus de 3PV?</li>
+</ol>
+
+<h2 id="pour-ceux-qui-ont-fini">Pour ceux qui ont fini</h2>
+
+<h3 id="lecture-de-fichier">Lecture de fichier</h3>
+
+<ul>
+  <li>Créez un fichier texte avec une liste de personnages de la forme Espèce, Nom, PV</li>
+  <li>Créez une fabrique de compagnie qui prend en paramètre un nom de fichier, et fabrique la compagnie en question.</li>
+</ul>
+
+<h3 id="tests-sur-les-expressions-régulières">Tests sur les expressions régulières</h3>
+
+<ul>
+  <li>À l’aide d’irb, entraînez vous à parser des expressions régulières, à en extraire une partie.</li>
+</ul>
+
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <!--    <h2 class="footer-heading">Supports de cours pour l'IUT</h2> -->
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Supports de cours pour l'IUT</li>
+        <li><a href="mailto:francois.delobel@uca.fr">francois.delobel@uca.fr</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        
+        
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">TPs mis à disposition le plus simplement possible pour mes étudiants.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>
+

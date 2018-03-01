@@ -1,43 +1,51 @@
-/**
- * Created by alcardosor on 26/01/18.
- */
+/** @description Code JavaScript du Tp1
+ * @param {Object} metier - Objet avec des classes personnes et adresses imbriqués
+ *
+ **/
 
 var metier = {
 
-    personne : {
-        "Nom" : "Duchantier",
-        "Prenom" : "Henry",
-        tab : new Array(),
-        
-        addAdresse : function (adresse) {
-            this.tab.push(adresse);
-        },
+    adresse: {
+        numero: "numéro",
+        libelle: "adresse"
+    },
 
-        getTab : function () {
-            return this.tab[0];
+    personne: {
+        nom: "nom",
+        prenom: "prenom",
+        tabAdresse: new Array(),
+
+        addAdresse: function (numero, libelle ) {
+            this.tabAdresse.push(numero,libelle);
         }
     },
 
-    adresse :{
-        "libelle": "Cezeaux Pellez",
-    },
-
-    getPersonne : function () {
+    getPersonne: function () {
         return this.personne;
     },
 
-    getLibelle : function(){
+    getAdresse: function () {
         return this.adresse;
     }
-
 }
 
 var vue = {
-    getHTML : function(){
-        document.getElementById("paraPersonne").innerHTML = metier.getPersonne().Nom;
-        document.getElementById("paraAdresse").innerHTML = metier.getTab();
+    getHTML: function () {
+        codeHTML= "<br/>" + metier.getPersonne().nom + " " + metier.getPersonne().prenom +" : <br/> ";
+        for (var i=0 ; i<metier.personne.tabAdresse.length ; i+=2){
+            codeHTML += metier.personne.tabAdresse[i];
+            codeHTML += metier.personne.tabAdresse[i+1]+"<br/>";
+
+        }
+        document.getElementById("paraPersonne").innerHTML = codeHTML;
     }
 }
 
-metier.personne.addAdresse(" yolo town");
+
+
+metier.personne.addAdresse("1 ","rue de la Botte");
+metier.personne.addAdresse("2 ","rue de la Bottinne");
+metier.personne.addAdresse("3 ","rue de la Bottette");
+metier.personne.addAdresse("4 ","rue de la Bottinounette");
+
 vue.getHTML();

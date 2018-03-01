@@ -1,5 +1,20 @@
 1/
-	gcc -Wall -I /tmp/graphic/usr/include -c -o test.o test.c
+	gcc -c test.c -o test.o -I /tmp/graphic/usr/include
 
 2/
-	gcc -L /tmp/graphic/usr/lib test.o -o test -lgraphic  -lX11
+	gcc -o test test.o -L /tmp/graphic/usr/lib -lgraphic -lX11 -lrt
+
+3/ 
+	LD_LIBRARY_PATH=/tmp/graphic/usr/lib
+	export LD_LIBRARY_PATH
+	./test
+
+Makefile: 
+
+all: test
+	gcc -c test.c -o test.o -I /tmp/graphic/usr/include
+	gcc -o test test.o -L /tmp/graphic/usr/lib -lgraphic -lX11 -lrt
+	LD_LIBRARY_PATH=/tmp/graphic/usr/lib
+	export LD_LIBRARY_PATH
+clean:
+	rm -f *.o editeur warcraft
